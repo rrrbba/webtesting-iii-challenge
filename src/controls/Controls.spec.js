@@ -5,7 +5,8 @@ import { render, fireEvent } from '@testing-library/react';
 import Controls from './Controls';
 
 test('it renders correctly', () => {
-   render(<Controls />)
+   expect(render(<Controls />)).toMatchSnapshot();
+   render(<Controls />);
 })
 
 test('The door is locked on click', () => {
@@ -17,11 +18,16 @@ test('The door is locked on click', () => {
     expect(toggleLockMock).toHaveBeenCalled();
 })
 
-test('The door is closed on click', () => {
-    const toggleClosedMock = jest.fn();
-    const { getByText } = render (
-        <Controls toggleLocked = {toggleClosedMock} />
+test('The door is unlocked', () => {
+    const props = {
+        locked: true
+    };
+
+    const unlock = render (
+        <Controls locked = {props.locked} />
     )
-    fireEvent.click(getByText(/lock gate/i));
-    expect(toggleClosedMock).toHaveBeenCalled();
+
+    expect(unlock.getByText(/unlock gate/i).textContent).toBe('Unlock Gate');
 })
+
+
