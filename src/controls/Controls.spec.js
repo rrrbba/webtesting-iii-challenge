@@ -14,7 +14,14 @@ test('The door is locked on click', () => {
         <Controls toggleClosed = {toggleLockMock} />
     )
     fireEvent.click(getByText(/close gate/i));
-    expect(toggleLockMock).toHaveBeenCalled()
+    expect(toggleLockMock).toHaveBeenCalled();
+})
 
-    
+test('The door is closed on click', () => {
+    const toggleClosedMock = jest.fn();
+    const { getByText } = render (
+        <Controls toggleLocked = {toggleClosedMock} />
+    )
+    fireEvent.click(getByText(/lock gate/i));
+    expect(toggleClosedMock).toHaveBeenCalled();
 })
